@@ -3,7 +3,7 @@ import Colors from "@/utils/colors";
 import { Ionicons } from "@expo/vector-icons";
 import { Canvas, Rect as SkRect } from "@shopify/react-native-skia";
 import { DateTime } from "luxon";
-import React, { useCallback, useEffect, useMemo, useRef } from "react";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 import {
   Pressable,
   ScrollView,
