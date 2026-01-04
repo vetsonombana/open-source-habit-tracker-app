@@ -44,26 +44,29 @@ export function useHeatmapOverall() {
     queryFn: async () => {
       const t = getDateInfo();
 
-      // Compute all Mondays from year start → current week
-      const yearStartWeek = DateTime.fromISO(t.yearStart)
+      const currentWeekStart = DateTime.fromISO(t.weekStart);
+
+      // Rolling 52-week window (including current week)
+      const rangeStartWeek = currentWeekStart
+        .minus({ weeks: 51 })
         .startOf("week")
         .toFormat("yyyy-MM-dd");
 
-      const currentWeekStart = t.weekStart;
+      const rangeEndWeek = currentWeekStart.toFormat("yyyy-MM-dd");
 
+      // Build exactly 52 weeks
       const weeks: string[] = [];
-      let cursor = DateTime.fromISO(yearStartWeek);
-      const end = DateTime.fromISO(currentWeekStart);
+      let cursor = DateTime.fromISO(rangeStartWeek);
 
-      while (cursor <= end) {
+      for (let i = 0; i < 52; i++) {
         weeks.push(cursor.toFormat("yyyy-MM-dd"));
         cursor = cursor.plus({ weeks: 1 });
       }
 
-      // Fetch heatmap data from DB
+      // Fetch only the rolling range
       const rows = await db.getAllAsync<HeatmapRow>(HEATMAP_QUERY, [
-        yearStartWeek,
-        currentWeekStart,
+        rangeStartWeek,
+        rangeEndWeek,
       ]);
 
       // Group by habit ID
@@ -81,7 +84,7 @@ export function useHeatmapOverall() {
             target: row.target,
             active: row.active,
             order: row.order,
-            entriesMap: {}, // temporary map: week_start → statuses array
+            entriesMap: {}, // week_start → statuses[]
           });
         }
 
@@ -96,36 +99,17 @@ export function useHeatmapOverall() {
         }
       }
 
-      // Build final entries array (Option A)
-      //   const result = Array.from(habitMap.values()).map((habit) => {
-      //     const entries: (0 | 1 | null)[][] = weeks.map((weekStart) => {
-      //       return (
-      //         habit.entriesMap[weekStart] ?? Array(7).fill(null) // fill missing weeks with null
-      //       );
-      //     });
+      // Build final result
       const result = Array.from(habitMap.values()).map((habit) => {
         const entries: (0 | 1 | null)[][] = weeks.map((weekStart) => {
           return habit.entriesMap[weekStart] ?? Array(7).fill(null);
         });
+
         return {
           ...habit,
           entries,
-          weeks, // <-- add this line (same weeks order for ALL habits)
+          weeks, // same 52-week window for all habits
         };
-
-        // return {
-        //   id: habit.id,
-        //   name: habit.name,
-        //   description: habit.description,
-        //   icon: habit.icon,
-        //   color: habit.color,
-        //   created_at: habit.created_at,
-        //   frequency: habit.frequency,
-        //   target: habit.target,
-        //   active: habit.active,
-        //   order: habit.order,
-        //   entries, // Option A: 2D array
-        // };
       });
 
       return result;
@@ -134,4 +118,3 @@ export function useHeatmapOverall() {
 
   return { overallData, isLoading, error, refetch };
 }
-
